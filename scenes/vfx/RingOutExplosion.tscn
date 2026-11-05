@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/vfx/ring_out_explosion.gd" id="1_ring"]
+
+[node name="RingOutExplosion" type="Node2D"]
+script = ExtResource("1_ring")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 35
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+emission_shape = 1
+emission_sphere_radius = 20.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 250.0
+initial_velocity_max = 500.0
+scale_amount_min = 3.0
+scale_amount_max = 7.0
+color = Color(1, 0.2, 0.1, 1)
+

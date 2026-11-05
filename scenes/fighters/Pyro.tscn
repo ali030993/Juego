@@ -1,0 +1,64 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/fighters/pyro.gd" id="1_pyro"]
+[ext_resource type="Script" path="res://scripts/fighters/fighter_visuals.gd" id="2_vis"]
+[ext_resource type="PackedScene" path="res://scenes/combat/Hurtbox.tscn" id="3_hurt"]
+[ext_resource type="PackedScene" path="res://scenes/combat/Hitbox.tscn" id="4_hit"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_world"]
+radius = 16.0
+height = 50.0
+
+[node name="Pyro" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_pyro")
+
+[node name="Visuals" type="Node2D" parent="."]
+script = ExtResource("2_vis")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -25)
+shape = SubResource("CapsuleShape2D_world")
+
+[node name="Hurtbox" parent="." instance=ExtResource("3_hurt")]
+position = Vector2(0, -25)
+
+[node name="Hitbox" parent="." instance=ExtResource("4_hit")]
+position = Vector2(30, -25)
+
+[node name="HitstunTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="InvincibilityTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="VFX" type="Node2D" parent="."]
+
+[node name="TrailParticles" type="CPUParticles2D" parent="VFX"]
+position = Vector2(0, -25)
+emitting = false
+amount = 16
+lifetime = 0.35
+emission_shape = 1
+emission_sphere_radius = 12.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 60.0
+scale_amount_min = 3.0
+scale_amount_max = 6.0
+color = Color(1, 0.9, 0.4, 0.6)
+
+[node name="LandParticles" type="CPUParticles2D" parent="VFX"]
+emitting = false
+amount = 8
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 40)
+initial_velocity_min = 40.0
+initial_velocity_max = 80.0
+color = Color(0.8, 0.8, 0.8, 0.5)
+
+[node name="Controller" type="Node" parent="."]

@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/combat/hitbox.gd" id="1_hit"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h1"]
+size = Vector2(40, 30)
+
+[node name="Hitbox" type="Area2D"]
+collision_layer = 16
+collision_mask = 8
+monitoring = false
+script = ExtResource("1_hit")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_h1")
+debug_color = Color(0.95, 0.1, 0.1, 0.4)
+

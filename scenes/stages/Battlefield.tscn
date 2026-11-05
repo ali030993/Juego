@@ -1,0 +1,113 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/stages/stage_manager.gd" id="1_stage"]
+[ext_resource type="Script" path="res://scripts/stages/stage_backdrop.gd" id="2_backdrop"]
+[ext_resource type="Script" path="res://scripts/stages/dynamic_camera.gd" id="3_cam"]
+[ext_resource type="PackedScene" path="res://scenes/ui/BattleUI.tscn" id="4_bui"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_main"]
+size = Vector2(700, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left"]
+size = Vector2(180, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right"]
+size = Vector2(180, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]
+size = Vector2(200, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bz_lr"]
+size = Vector2(200, 2000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bz_tb"]
+size = Vector2(2400, 200)
+
+[node name="Battlefield" type="Node2D"]
+script = ExtResource("1_stage")
+
+[node name="StageBackdrop" type="Node2D" parent="."]
+z_index = -10
+script = ExtResource("2_backdrop")
+
+[node name="StageTerrain" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 2
+
+[node name="MainCollision" type="CollisionShape2D" parent="StageTerrain"]
+position = Vector2(640, 480)
+shape = SubResource("RectangleShape2D_main")
+
+[node name="LeftCollision" type="CollisionShape2D" parent="StageTerrain"]
+position = Vector2(450, 370)
+shape = SubResource("RectangleShape2D_left")
+one_way_collision = true
+
+[node name="RightCollision" type="CollisionShape2D" parent="StageTerrain"]
+position = Vector2(830, 370)
+shape = SubResource("RectangleShape2D_right")
+one_way_collision = true
+
+[node name="TopCollision" type="CollisionShape2D" parent="StageTerrain"]
+position = Vector2(640, 260)
+shape = SubResource("RectangleShape2D_top")
+one_way_collision = true
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="P1" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(440, 420)
+
+[node name="P2" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(570, 420)
+
+[node name="P3" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(710, 420)
+
+[node name="P4" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(840, 420)
+
+[node name="RespawnPoint" type="Marker2D" parent="."]
+position = Vector2(640, 160)
+
+[node name="BlastZones" type="Node2D" parent="."]
+
+[node name="BlastZoneLeft" type="Area2D" parent="BlastZones"]
+position = Vector2(-400, 360)
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BlastZones/BlastZoneLeft"]
+shape = SubResource("RectangleShape2D_bz_lr")
+
+[node name="BlastZoneRight" type="Area2D" parent="BlastZones"]
+position = Vector2(1680, 360)
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BlastZones/BlastZoneRight"]
+shape = SubResource("RectangleShape2D_bz_lr")
+
+[node name="BlastZoneTop" type="Area2D" parent="BlastZones"]
+position = Vector2(640, -450)
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BlastZones/BlastZoneTop"]
+shape = SubResource("RectangleShape2D_bz_tb")
+
+[node name="BlastZoneBottom" type="Area2D" parent="BlastZones"]
+position = Vector2(640, 1100)
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BlastZones/BlastZoneBottom"]
+shape = SubResource("RectangleShape2D_bz_tb")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+position_smoothing_enabled = true
+script = ExtResource("3_cam")
+
+[node name="BattleUI" parent="." instance=ExtResource("4_bui")]
+
